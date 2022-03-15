@@ -1,10 +1,12 @@
 package com.duranco.exercice1;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,9 +18,17 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Commande {
+@JsonIgnoreProperties(
+		value = {"date"},
+		allowGetters = true
+		)
+@EntityListeners(AuditingEntityListener.class)
+public class Commande implements Serializable {
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
